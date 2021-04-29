@@ -7,8 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.cursomc.services.StandardError;
-
 @ControllerAdvice
 public class ResourceExceptionHandler {
 	

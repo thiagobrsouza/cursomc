@@ -1,4 +1,4 @@
-package com.cursomc.services;
+package com.cursomc.services.exceptions;
 
 import java.io.Serializable;
 
