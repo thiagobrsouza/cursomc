@@ -1,5 +1,6 @@
 package com.cursomc;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
@@ -13,6 +14,7 @@ import com.cursomc.domain.Cidade;
 import com.cursomc.domain.Cliente;
 import com.cursomc.domain.Endereco;
 import com.cursomc.domain.Estado;
+import com.cursomc.domain.ItemPedido;
 import com.cursomc.domain.Pagamento;
 import com.cursomc.domain.PagamentoComBoleto;
 import com.cursomc.domain.PagamentoComCartao;
@@ -25,6 +27,7 @@ import com.cursomc.repositories.CidadeRepository;
 import com.cursomc.repositories.ClienteRepository;
 import com.cursomc.repositories.EnderecoRepository;
 import com.cursomc.repositories.EstadoRepository;
+import com.cursomc.repositories.ItemPedidoRepository;
 import com.cursomc.repositories.PagamentoRepository;
 import com.cursomc.repositories.PedidoRepository;
 import com.cursomc.repositories.ProdutoRepository;
@@ -55,6 +58,9 @@ public class CursomcApplication implements CommandLineRunner{
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -135,6 +141,23 @@ public class CursomcApplication implements CommandLineRunner{
 		// persistindo os pedidos e pagamentos no banco
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		// instanciando itens do pedido
+		ItemPedido ip1 = new ItemPedido(ped1, p1, new BigDecimal(0.00), 1, new BigDecimal(2000.00));
+		ItemPedido ip2 = new ItemPedido(ped1, p3, new BigDecimal(0.00), 2, new BigDecimal(80.00));
+		ItemPedido ip3 = new ItemPedido(ped2, p2, new BigDecimal(100.00), 1, new BigDecimal(800.00));
+		
+		// associando pedido com os itens
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		// associando os produtos aos itens de pedido
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		// persistindo os itens pedidos no banco de dados
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 		
 	}
 
