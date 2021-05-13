@@ -21,7 +21,7 @@ public abstract class Pagamento implements Serializable {
 
 	@Id
 	private Long id;
-	private int estado;
+	private Integer estado;
 	
 	@JsonIgnore
 	@OneToOne
@@ -36,7 +36,7 @@ public abstract class Pagamento implements Serializable {
 	public Pagamento(Long id, EstadoPagamento estado, Pedido pedido) {
 		super();
 		this.id = id;
-		this.estado = estado.getCod();
+		this.estado = (estado==null) ? null : estado.getCod();
 		this.pedido = pedido;
 	}
 

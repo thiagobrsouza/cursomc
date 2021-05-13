@@ -36,8 +36,9 @@ public class CategoriaService {
 	
 	// metodo update
 	public Categoria update(Categoria obj) {
-		find(obj.getId());
-		return repository.save(obj);
+		Categoria newObj = find(obj.getId()); // instanciando um novo objeto atraves do banco de dados
+		updateData(newObj, obj);
+		return repository.save(newObj);
 	}
 	
 	// metodo delete
@@ -65,6 +66,11 @@ public class CategoriaService {
 	// metodo para converter para dto
 	public Categoria fromDTO(CategoriaDTO objDto) {
 		return new Categoria(objDto.getId(), objDto.getNome());
+	}
+	
+	// metodo auxiliar para atualizar
+	private void updateData(Categoria newObj, Categoria obj) {
+		newObj.setNome(obj.getNome());
 	}
 
 }
